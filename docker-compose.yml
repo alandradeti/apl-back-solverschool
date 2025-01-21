@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+       - "${PORT_APP}:${PORT_APP}"
+    depends_on:
+      - mongodb
+    networks:
+      - mynetwork
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "${PORT_DATABASE}:${PORT_DATABASE}"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MONGO_INITDB_ROOT_USERNAME=${USER_DATABASE}
+      - MONGO_INITDB_ROOT_PASSWORD=${PASS_DATABASE}
+      - MONGO_INITDB_DATABASE=${NAME_DATABASE}
+      - MONGO_INITDB_ADMIN=true
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mongodb_data:
