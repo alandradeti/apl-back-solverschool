@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateMateriaDto } from './CreateMateria.dto';
+import { CreateMateriaDto } from './createMateria.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
