@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DatabaseRepository } from 'src/database/repositories/database.repository';
-import { IMateriaDocument } from '../Document/materia.document.interface';
+import { IMateriaDocument } from '../document/materia.document.interface';
 import { IMateriaRepository } from './interfaces/materia.repository.interface';
 
 @Injectable()

@@ -1,5 +1,5 @@
 import { DatabaseSchema } from 'src/database/Schemas/database.schema';
-import { IMateriaDocument } from '../Document/materia.document.interface';
+import { IMateriaDocument } from '../document/materia.document.interface';
 
 export class MateriaSchema extends DatabaseSchema<IMateriaDocument> {
   constructor() {
