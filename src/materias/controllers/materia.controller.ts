@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { MateriaService } from 'src/materias/services/materia.service';
-import { IMateriaDocument } from 'src/materias/Document/materia.document.interface';
-import { CreateMateriaDto } from '../dto/CreateMateria.dto';
+import { CreateMateriaDto } from '../dtos/createMateria.dto';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UpdateMateriaDto } from '../dto/UpdateMateria.dto';
+import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
+import { IMateriaDocument } from '../documents/interfaces/materia.document.interface';
 
 @ApiTags('Materias')
 @Controller('materias')

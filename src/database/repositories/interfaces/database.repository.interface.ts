@@ -5,4 +5,6 @@ export interface IDatabaseRepository<T> {
   findAll(query: any): Promise<T[]>;
   update(id: string, data: Partial<T>): Promise<T | null>;
   delete(id: string): Promise<T | null>;
+  findAllWithPopulate(populateOptions: any): Promise<T[]>;
+  findByIdWithPopulate(id: string, populateOptions: any): Promise<T | null>;
 }

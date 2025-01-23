@@ -10,7 +10,7 @@ export class DatabaseSchema<T> {
 
   public createModel(modelName: string): Model<T & IDatabaseDocument> {
     if (!modelName) {
-      throw new Error('Model name is required to create a Mongoose model.');
+      throw new Error('Modelo de banco de dados precisa de um nome.');
     }
     return model<T & IDatabaseDocument>(modelName, this.schema);
   }

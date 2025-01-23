@@ -1,10 +1,8 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { IMateriaDocument } from '../Document/materia.document.interface';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { IMateriaRepository } from '../repositories/interfaces/materia.repository.interface';
-import { CreateMateriaDto } from '../dto/CreateMateria.dto';
-import { UpdateMateriaDto } from '../dto/UpdateMateria.dto';
-import { MateriaRepository } from '../repositories/materia.repository';
-
+import { CreateMateriaDto } from '../dtos/createMateria.dto';
+import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
+import { IMateriaDocument } from '../documents/interfaces/materia.document.interface';
 
 @Injectable()
 export class MateriaService {
