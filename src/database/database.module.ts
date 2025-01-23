@@ -3,6 +3,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MateriaSchema } from 'src/materias/schemas/materia.schema';
 import { DatabaseRepository } from './repositories/database.repository';
 import { ConfigModule } from '@nestjs/config';
+import { QuestaoSchema } from 'src/questoes/schemas/questao.schema';
+import { AlternativaSchema } from 'src/alternativas/schemas/alternativa.schema';
 
 @Module({
     imports: [
@@ -12,7 +14,11 @@ import { ConfigModule } from '@nestjs/config';
             `@${process.env.HOST_DATABASE}:${process.env.PORT_DATABASE}` +
             `/${process.env.NAME_DATABASE}?authSource=admin`
         ),
-        MongooseModule.forFeature([{ name: 'Materia', schema: new MateriaSchema().getSchema()}]),
+        MongooseModule.forFeature([
+            { name: 'Materia', schema: new MateriaSchema().getSchema()},
+            { name: 'Questao', schema: new QuestaoSchema().getSchema()},
+            { name: 'Alternativa', schema: new AlternativaSchema().getSchema()},
+        ]),
     ],
     providers: [DatabaseRepository],
     exports: [DatabaseRepository, MongooseModule],

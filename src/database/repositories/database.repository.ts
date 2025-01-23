@@ -3,7 +3,7 @@ import { IDatabaseDocument } from '../Documents/interfaces/database.document.int
 import { IDatabaseRepository } from './interfaces/database.repository.interface';
 
 export class DatabaseRepository<T extends IDatabaseDocument> implements IDatabaseRepository<T> {
-  protected model: Model<T>;
+  protected readonly model: Model<T>;
 
   constructor(model: Model<T>) {
     this.model = model;
@@ -25,6 +25,13 @@ export class DatabaseRepository<T extends IDatabaseDocument> implements IDatabas
 
   async findAll(query: any): Promise<T[]> {
     return this.model.find(query).lean().select('-__v').exec() as Promise<T[]>;
+  }
+
+  async findAllWithPopulate(populateOptions: any): Promise<T[]> {
+    return this.model.find().populate(populateOptions).lean().select('-__v').exec() as Promise<T[]>;
+  }
+  async findByIdWithPopulate(id: string, populateOptions: any): Promise<T | null> {
+    return this.model.findById(id).populate(populateOptions).lean().select('-__v').exec() as Promise<T | null>; 
   }
 
   async update(id: string, data: Partial<T>): Promise<T | null> {
