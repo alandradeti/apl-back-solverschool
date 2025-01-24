@@ -11,10 +11,10 @@ async function bootstrap() {
 
   // Configuração do Swagger
   const config = new DocumentBuilder()
-  .setTitle('SolverSchool-API')
-  .setDescription('SolverSchool API - Gestão de postagens escolares')
+  .setTitle('ICapelo-API')
+  .setDescription('ICapelo API - Gestão de provas escolares')
   .setVersion('1.0')
-  .addTag('solverschool')
+  .addTag('icapelo')
   .addBearerAuth()
   .build();
 
