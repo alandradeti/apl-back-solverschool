@@ -11,12 +11,12 @@ async function bootstrap() {
 
   // Configuração do Swagger
   const config = new DocumentBuilder()
-  .setTitle('ICapelo-API')
-  .setDescription('ICapelo API - Gestão de provas escolares')
-  .setVersion('1.0')
-  .addTag('icapelo')
-  .addBearerAuth()
-  .build();
+    .setTitle('ICapelo-API')
+    .setDescription('ICapelo API - Gestão de provas escolares')
+    .setVersion('1.0')
+    .addTag('icapelo')
+    .addBearerAuth()
+    .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document); // Inicialização do Swagger (Documentação/Requisição) da API

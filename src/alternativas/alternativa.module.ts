@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module'; 
+import { DatabaseModule } from 'src/database/database.module';
 import { AlternativaRepository } from './repositories/alternativa.repository';
 import { AlternativaService } from './services/alternativa.service';
 import { AlternativaController } from './controllers/alternativa.controller';
@@ -14,6 +14,6 @@ import { AlternativaController } from './controllers/alternativa.controller';
     },
   ],
   controllers: [AlternativaController],
-  exports: [AlternativaService], 
+  exports: [AlternativaService],
 })
 export class AlternativaModule {}

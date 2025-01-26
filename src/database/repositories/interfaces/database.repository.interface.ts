@@ -1,3 +1,5 @@
+import { Model } from 'mongoose';
+
 export interface IDatabaseRepository<T> {
   create(data: Partial<T>): Promise<T>;
   findById(id: string): Promise<T | null>;
@@ -7,4 +9,5 @@ export interface IDatabaseRepository<T> {
   delete(id: string): Promise<T | null>;
   findAllWithPopulate(populateOptions: any): Promise<T[]>;
   findByIdWithPopulate(id: string, populateOptions: any): Promise<T | null>;
+  existsById(id: string, collectionName: string): Promise<boolean>;
 }
