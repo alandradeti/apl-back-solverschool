@@ -4,23 +4,25 @@ services:
       context: .
     ports:
        - "${PORT_APP}:${PORT_APP}"
+    volumes:
+      - ./src:/usr/app/src
+    command: npx nodemon --watch src --exec "npm run start:dev"
     depends_on:
-      - mongodb
+      - postgres
     networks:
       - mynetwork
 
-  mongodb:
-    image: mongo:latest
+  postgres:
+    image: postgres:latest
     ports:
       - "${PORT_DATABASE}:${PORT_DATABASE}"
     environment:
       - ALLOW_EMPTY_PASSWORD=no
-      - MONGO_INITDB_ROOT_USERNAME=${USER_DATABASE}
-      - MONGO_INITDB_ROOT_PASSWORD=${PASS_DATABASE}
-      - MONGO_INITDB_DATABASE=${NAME_DATABASE}
-      - MONGO_INITDB_ADMIN=true
+      - POSTGRES_USER=${USER_DATABASE}
+      - POSTGRES_PASSWORD=${PASS_DATABASE}
+      - POSTGRES_DB=${NAME_DATABASE}
     volumes:
-      - mongodb_data:/data/db
+      - postgres_data:/data/db
     networks:
       - mynetwork
 
@@ -29,4 +31,4 @@ networks:
     driver: bridge
 
 volumes:
-  mongodb_data:
+  postgres_data:

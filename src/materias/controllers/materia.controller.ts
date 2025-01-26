@@ -3,7 +3,7 @@ import { MateriaService } from 'src/materias/services/materia.service';
 import { CreateMateriaDto } from '../dtos/createMateria.dto';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
-import { IMateriaDocument } from '../documents/interfaces/materia.document.interface';
+import { IMateria } from 'src/database/entities/materias/interfaces/materia.entitie.interface';
 
 @ApiTags('Materias')
 @Controller('materias')
@@ -17,7 +17,7 @@ export class MateriaController {
     type: CreateMateriaDto,
   })
   @Post()
-  async create(@Body() createMateriaDto: CreateMateriaDto): Promise<IMateriaDocument> {
+  async create(@Body() createMateriaDto: CreateMateriaDto): Promise<IMateria> {
     return this.materiaService.create(createMateriaDto);
   }
 
@@ -28,7 +28,7 @@ export class MateriaController {
     type: [CreateMateriaDto],
   })
   @Get()
-  async findAll(): Promise<IMateriaDocument[]> {
+  async findAll(): Promise<IMateria[]> {
     return this.materiaService.findAll();
   }
 
@@ -40,7 +40,7 @@ export class MateriaController {
     type: CreateMateriaDto,
   })
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<IMateriaDocument | null> {
+  async findById(@Param('id') id: string): Promise<IMateria | null> {
     return this.materiaService.findById(id);
   }
 
@@ -52,7 +52,7 @@ export class MateriaController {
     type: CreateMateriaDto,
   })
   @Get('nome/:nome')
-  async findByName(@Param('nome') nome: string): Promise<IMateriaDocument[]> {
+  async findByName(@Param('nome') nome: string): Promise<IMateria[]> {
     return this.materiaService.findByName(nome);
   }
 
@@ -71,7 +71,7 @@ export class MateriaController {
   async update(
     @Param('id') id: string,
     @Body() updateMateriaDto: UpdateMateriaDto,
-  ): Promise<IMateriaDocument | null> {
+  ): Promise<IMateria | null> {
     return this.materiaService.update(id, updateMateriaDto);
   }
 

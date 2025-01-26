@@ -1,32 +1,40 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { MateriaSchema } from 'src/materias/schemas/materia.schema';
 import { DatabaseRepository } from './repositories/database.repository';
 import { ConfigModule } from '@nestjs/config';
-import { QuestaoSchema } from 'src/questoes/schemas/questao.schema';
-import { AlternativaSchema } from 'src/alternativas/schemas/alternativa.schema';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({ isGlobal: true }),
-        MongooseModule.forRoot(
-            `mongodb://${process.env.USER_DATABASE}:${process.env.PASS_DATABASE}` +
-            `@${process.env.HOST_DATABASE}:${process.env.PORT_DATABASE}` +
-            `/${process.env.NAME_DATABASE}?authSource=admin`
-        ),
-        MongooseModule.forFeature([
-            { name: 'Materia', schema: new MateriaSchema().getSchema()},
-            { name: 'Questao', schema: new QuestaoSchema().getSchema()},
-            { name: 'Alternativa', schema: new AlternativaSchema().getSchema()},
-        ]),
-    ],
-    providers: [DatabaseRepository],
-    exports: [DatabaseRepository, MongooseModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.HOST_DATABASE,
+      port: Number(process.env.PORT_DATABASE),
+      username: process.env.USER_DATABASE,
+      password: process.env.PASS_DATABASE,
+      database: process.env.NAME_DATABASE,
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: process.env.NODE_ENV !== 'production',
+      logging: process.env.NODE_ENV === 'development',
+      ssl:
+        process.env.VERIFY_SSL_DATABASE === 'true'
+          ? { rejectUnauthorized: false }
+          : false,
+    }),
+  ],
+  providers: [DatabaseRepository],
+  exports: [DatabaseRepository, TypeOrmModule],
 })
 export class DatabaseModule {}
 
-console.log( 'LINK BASE DE DADOS',
-    `mongodb://${process.env.USER_DATABASE}:${process.env.PASS_DATABASE}` +
-    `@${process.env.HOST_DATABASE}:${process.env.PORT_DATABASE}` +    
-    `/${process.env.NAME_DATABASE}?authSource=admin`
-);
+
+if (process.env.NODE_ENV !== 'production') {
+  console.log(
+    'DATABASE_URL:' + process.env.DATABASE_URL,
+    'HOST_DATABASE:' + process.env.HOST_DATABASE,
+    'PORT_DATABASE:' + Number(process.env.PORT_DATABASE),
+    'USER_DATABASE:' + process.env.USER_DATABASE,
+    'PASS_DATABASE:' + process.env.PASS_DATABASE,
+    'NAME_DATABASE:' + process.env.NAME_DATABASE,
+  );
+}

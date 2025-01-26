@@ -1,10 +1,46 @@
+import { DeepPartial, FindOptionsWhere } from 'typeorm';
+
 export interface IDatabaseRepository<T> {
-  create(data: Partial<T>): Promise<T>;
-  findById(id: string): Promise<T | null>;
-  findOne(query: any): Promise<T | null>;
-  findAll(query: any): Promise<T[]>;
-  update(id: string, data: Partial<T>): Promise<T | null>;
-  delete(id: string): Promise<T | null>;
-  findAllWithPopulate(populateOptions: any): Promise<T[]>;
-  findByIdWithPopulate(id: string, populateOptions: any): Promise<T | null>;
+    /**
+     * Cria e salva uma nova entidade.
+     * @param data Dados da entidade.
+     * @returns A entidade criada.
+     */
+    create(data: DeepPartial<T>): Promise<T>;
+
+    /**
+     * Busca uma entidade pelo ID.
+     * @param id ID da entidade.
+     * @returns A entidade encontrada ou `null`.
+     */
+    findById(id: string | number): Promise<T | null>;
+
+    /**
+     * Busca uma entidade com base em uma consulta.
+     * @param query Condições de busca.
+     * @returns A entidade encontrada ou `null`.
+     */
+    findOne(query: FindOptionsWhere<T>): Promise<T | null>;
+
+    /**
+     * Busca todas as entidades que correspondem a uma consulta.
+     * @param query Condições de busca.
+     * @returns Lista de entidades.
+     */
+    findAll(query: FindOptionsWhere<T>): Promise<T[]>;
+
+    /**
+     * Atualiza uma entidade pelo ID.
+     * @param id ID da entidade.
+     * @param data Dados para atualizar.
+     * @returns A entidade atualizada ou `null`.
+     */
+    update(id: string | number, data: DeepPartial<T>): Promise<T | null>;
+
+    /**
+     * Remove uma entidade pelo ID.
+     * @param id ID da entidade.
+     * @returns A entidade removida ou `null`.
+     */
+    delete(id: string | number): Promise<T | null>;
 }

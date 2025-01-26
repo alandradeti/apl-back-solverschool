@@ -1,70 +1,86 @@
 import {
-  ArgumentsHost,
-  Catch,
   ExceptionFilter,
+  Catch,
+  ArgumentsHost,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { MongoError } from 'mongodb';
-import { Error as MongooseError } from 'mongoose';
-const { ValidationError } = MongooseError;
+import { HttpAdapterHost } from '@nestjs/core';
+import { QueryFailedError } from 'typeorm';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
-    const request = ctx.getRequest();
+  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
-    let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = 'Internal server error';
+  catch(exception: unknown, host: ArgumentsHost) {
+    const { httpAdapter } = this.httpAdapterHost;
+    const httpArgumentsHost = host.switchToHttp();
 
-    // Tratar erros específicos do MongoDB
-    if (exception instanceof MongoError) {
-      switch (exception.code) {
-        case 11000: // Duplicação de chave
-          status = HttpStatus.CONFLICT;
-          message = 'Duplicated key error: A resource with the given identifier already exists.';
-          break;
-        default:
-          message = `MongoDB Error: ${exception.message}`;
-      }
+    let httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message = 'Erro interno do servidor';
+    let responseBody: any = {};
+
+    // Tratar erros do tipo HTTPException
+    if (exception instanceof HttpException) {
+      httpStatus = exception.getStatus();
+      message = (exception.getResponse() as any).message || 'Erro desconhecido';
+      responseBody = this.createErrorResponse(httpStatus, message);
     }
-    // Tratar erros de validação do Mongoose
-    else if (exception instanceof ValidationError) {
-      status = HttpStatus.BAD_REQUEST;
-      message = Object.values(exception.errors)
-        .map((err: any) => err.message)
-        .join('; ');
+    // Tratar erros de validação de dados (exemplo com class-validator)
+    else if (
+      exception instanceof Error &&
+      exception.message.includes('validation failed')
+    ) {
+      httpStatus = HttpStatus.BAD_REQUEST;
+      message = 'Erro de validação de dados';
+      responseBody = this.createErrorResponse(httpStatus, message);
     }
-    // Tratar erros HTTP personalizados
-    else if (exception instanceof HttpException) {
-      status = exception.getStatus();
-      const responseMessage = exception.getResponse();
-      message =
-        typeof responseMessage === 'string'
-          ? responseMessage
-          : (responseMessage as any).message || 'An error occurred';
+    // Tratar erros de violação de chave única (TypeORM ou outros ORMs)
+    else if (
+      exception instanceof QueryFailedError &&
+      exception.message.includes('duplicate key value')
+    ) {
+      httpStatus = HttpStatus.CONFLICT;
+      message = 'Conflito de dados: chave duplicada';
+      responseBody = this.createErrorResponse(httpStatus, message);
     }
-    // Outros erros
-    else if (exception instanceof Error) {
-      message = exception.message || message;
+    // Tratar erros de permissão ou acesso negado
+    else if (
+      exception instanceof Error &&
+      exception.message.includes('forbidden')
+    ) {
+      httpStatus = HttpStatus.FORBIDDEN;
+      message = 'Acesso negado';
+      responseBody = this.createErrorResponse(httpStatus, message);
+    }
+    // Tratar erro 404 Not Found
+    else if (
+      exception instanceof Error &&
+      exception.message.includes('not found')
+    ) {
+      httpStatus = HttpStatus.NOT_FOUND;
+      message = 'Recurso não encontrado';
+      responseBody = this.createErrorResponse(httpStatus, message);
+    }
+    // Caso contrário, tratar como erro genérico
+    else {
+      console.error('Exception:', exception); // Log de exceções desconhecidas
+      message = 'Erro inesperado';
+      responseBody = this.createErrorResponse(httpStatus, message);
     }
 
-    // Log do erro para depuração
-    console.error({
+    httpAdapter.reply(
+      httpArgumentsHost.getResponse(),
+      responseBody,
+      httpStatus,
+    );
+  }
+
+  private createErrorResponse(statusCode: number, message: string) {
+    return {
+      statusCode,
       timestamp: new Date().toISOString(),
-      path: request.url,
-      message: exception.message,
-      stack: exception.stack,
-    });
-
-    // Resposta ao cliente
-    response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
       message,
-    });
+    };
   }
 }

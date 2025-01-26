@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module'; 
-import { MateriaRepository } from './repositories/materia.repository';
 import { MateriaService } from './services/materia.service';
 import { MateriaController } from './controllers/materia.controller';
+import { MateriaRepository } from './repositories/materia.repository';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
   imports: [DatabaseModule],
+  controllers: [MateriaController],
   providers: [
     MateriaService,
     {
@@ -13,7 +14,7 @@ import { MateriaController } from './controllers/materia.controller';
       useClass: MateriaRepository,
     },
   ],
-  controllers: [MateriaController],
-  exports: [MateriaService], 
+  
+  exports: [MateriaService],
 })
 export class MateriaModule {}
