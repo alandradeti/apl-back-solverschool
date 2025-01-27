@@ -18,8 +18,17 @@ export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
   descricao?: string;
 
   @ApiProperty({
-    description: 'IDs das perguntas associadas à matéria',
-    example: ['603dcb7f3f015d3f8c4d8f1b', '603dcb7f3f015d3f8c4d8f2a'],
+    description: 'Perguntas associadas à matéria (atualização opcional)',
+    example: [
+      {
+        id: '603dcb7f3f015d3f8c4d8f1b',
+        enunciado: 'Qual é a fórmula da área do círculo?',
+      },
+      {
+        id: '603dcb7f3f015d3f8c4d8f2a',
+        enunciado: 'Qual é a fórmula da área do quadrado?',
+      },
+    ],
     required: false,
   })
   perguntas?: IPergunta[];

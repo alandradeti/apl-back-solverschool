@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
-import { IAlternativa } from 'src/alternativas/entities/alternativa.entity.interface';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { IMateria } from 'src/materias/entities/interfaces/materia.entity.interface';
+import { IAlternativa } from 'src/alternativas/entities/alternativa.entity.interface';
 
 export class CreatePerguntaDto {
   @IsNotEmpty()
@@ -13,20 +13,32 @@ export class CreatePerguntaDto {
   enunciado: string;
 
   @IsOptional()
-  @IsUUID()
   @ApiProperty({
     description: 'ID da matéria relacionada à pergunta',
-    example: '550e8400-e29b-41d4-a716-446655440000',
+    example: {
+      id: '603dcb7f3f015d3f8c4d8f1b',
+      nome: 'Matemática',
+    },
     required: false,
   })
   materia?: IMateria;
 
   @IsOptional()
-  @IsUUID('4', { each: true })
   @ApiProperty({
     description: 'IDs das alternativas relacionadas à pergunta',
-    example: ['550e8400-e29b-41d4-a716-446655440000', '550e8400-e29b-41d4-a716-446655440001'],
+    example: [
+      {
+        id: '603dcb7f3f015d3f8c4d8f1b',
+        descricao: 'A fórmula da área do círculo é π * r²',
+        correta: true,
+      },
+      {
+        id: '603dcb7f3f015d3f8c4d8f1a',
+        descricao: 'A fórmula da área do círculo é 2 * π * r',
+        correta: false,
+      },
+    ],
     required: false,
   })
-  alternativa?: IAlternativa[]; 
+  alternativas?: IAlternativa[];
 }

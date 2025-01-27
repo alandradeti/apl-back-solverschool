@@ -13,14 +13,28 @@ export class UpdatePerguntaDto extends PartialType(CreatePerguntaDto) {
 
   @ApiProperty({
     description: 'ID da matéria relacionada à pergunta',
-    example: '550e8400-e29b-41d4-a716-446655440000',
+    example: {
+      id: '603dcb7f3f015d3f8c4d8f1b',
+      nome: 'Matemática',
+    },
     required: false,
   })
   materia?: IMateria;
 
   @ApiProperty({
     description: 'IDs das alternativas relacionadas à pergunta',
-    example: ['550e8400-e29b-41d4-a716-446655440000', '550e8400-e29b-41d4-a716-446655440001'],
+    example: [
+      {
+        id: '603dcb7f3f015d3f8c4d8f1b',
+        descricao: 'A fórmula da área do círculo é π * r²',
+        correta: true,
+      },
+      {
+        id: '603dcb7f3f015d3f8c4d8f1a',
+        descricao: 'A fórmula da área do círculo é 2 * π * r',
+        correta: false,
+      },
+    ],
     required: false,
   })
   alternativas?: IAlternativa[];

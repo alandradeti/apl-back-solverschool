@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmpty, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 
 export class CreateMateriaDto {
@@ -23,8 +23,17 @@ export class CreateMateriaDto {
 
   @IsOptional()
   @ApiProperty({
-    description: 'IDs das perguntas associadas à matéria',
-    example: ['603dcb7f3f015d3f8c4d8f1b', '603dcb7f3f015d3f8c4d8f2a'],
+    description: 'Perguntas associadas à matéria',
+    example: [
+      {
+        id: '603dcb7f3f015d3f8c4d8f1b',
+        enunciado: 'Qual é a fórmula da área do círculo?',
+      },
+      {
+        id: '603dcb7f3f015d3f8c4d8f2a',
+        enunciado: 'Qual é a fórmula da área do quadrado?',
+      },
+    ],
     required: false,
   })
   perguntas?: IPergunta[];

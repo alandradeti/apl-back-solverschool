@@ -28,8 +28,11 @@ export class CreateAlternativaDto {
   @IsOptional()
   @IsUUID()
   @ApiProperty({
-    description: 'ID da pergunta relacionada à alternativa (UUID)',
-    example: '550e8400-e29b-41d4-a716-446655440000',
+    description: 'Pergunta relacionada à alternativa (ID da pergunta)',
+    example: {
+      id: '550e8400-e29b-41d4-a716-446655440000',
+      enunciado: 'Qual é a fórmula da área do círculo?',
+    },
     required: false,
   })
   pergunta?: IPergunta;
