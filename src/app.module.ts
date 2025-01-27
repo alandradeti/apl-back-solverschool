@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { MateriaModule } from './materias/materia.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-//import { QuestaoModule } from './questoes/questao.module';
-//import { AlternativaModule } from './alternativas/alternativa.module';
+import { AlternativaModule } from './alternativas/alternativa.module';
+import { PerguntaModule } from './perguntas/pergunta.module';
 
 @Module({
   imports: [
@@ -26,8 +26,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           : false,
     }),
     MateriaModule,
-    //QuestaoModule,
-    //AlternativaModule,
+    PerguntaModule,
+    AlternativaModule,
   ],
   controllers: [AppController], 
   providers: [AppService],

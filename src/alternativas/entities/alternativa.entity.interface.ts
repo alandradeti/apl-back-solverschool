@@ -1,8 +1,8 @@
 import { IPergunta } from "src/perguntas/entities/pergunta.entity.interface";
 
-export interface IMateria {
+export interface IAlternativa {
   id?: string | undefined;
-  nome: string;
   descricao: string;
-  perguntas?: IPergunta[];
+  correta: boolean;
+  pergunta?: IPergunta;
 }

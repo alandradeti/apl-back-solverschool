@@ -1,15 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmpty, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 
 export class CreateMateriaDto {
-  @IsEmpty()
-  @ApiProperty({
-    description: 'ID da matéria',
-    example: '72ee8e45-340b-46b3-b108-ef4ba1a0a862',
-    required: false,
-  })
-  id?: string;
-
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -27,4 +20,12 @@ export class CreateMateriaDto {
     required: true,
   })
   descricao: string;
+
+  @IsOptional()
+  @ApiProperty({
+    description: 'IDs das perguntas associadas à matéria',
+    example: ['603dcb7f3f015d3f8c4d8f1b', '603dcb7f3f015d3f8c4d8f2a'],
+    required: false,
+  })
+  perguntas?: IPergunta[];
 }

@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IMateria } from './interfaces/materia.entity.interface';
+import { Pergunta } from 'src/perguntas/entities/pergunta.entity';
+import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 
 @Entity({
   name: 'materia',
@@ -8,7 +10,7 @@ export class Materia implements IMateria {
   @PrimaryGeneratedColumn('uuid', {
     name: 'id',
   })
-  id?: string;
+  id?: string | undefined;
 
   @Column({
     name: 'nome',
@@ -24,4 +26,7 @@ export class Materia implements IMateria {
     nullable: false,
   })
   descricao: string;
+
+  @OneToMany(() => Pergunta, (pergunta) => pergunta.materia)
+  perguntas?: IPergunta[];
 }
