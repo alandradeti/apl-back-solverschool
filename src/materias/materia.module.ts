@@ -2,19 +2,19 @@ import { Module } from '@nestjs/common';
 import { MateriaService } from './services/materia.service';
 import { MateriaController } from './controllers/materia.controller';
 import { MateriaRepository } from './repositories/materia.repository';
-import { DatabaseModule } from 'src/database/database.module';
+import { Materia } from './entities/materia.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MateriaPgRepository } from './repositories/materia.pg.repository';
 
 @Module({
-  imports: [DatabaseModule],
-  controllers: [MateriaController],
+  imports: [TypeOrmModule.forFeature([Materia])],
   providers: [
-    MateriaService,
     {
-      provide: 'IMateriaRepository',
-      useClass: MateriaRepository,
+      provide: MateriaRepository,
+      useClass: MateriaPgRepository,
     },
+    MateriaService,
   ],
-  
-  exports: [MateriaService],
+  controllers: [MateriaController],
 })
 export class MateriaModule {}

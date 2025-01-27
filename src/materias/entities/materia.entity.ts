@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IMateria } from './interfaces/materia.entitie.interface';
+import { IMateria } from './interfaces/materia.entity.interface';
 
 @Entity({
   name: 'materia',

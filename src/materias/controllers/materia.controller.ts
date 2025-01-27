@@ -1,20 +1,41 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Put,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { MateriaService } from 'src/materias/services/materia.service';
 import { CreateMateriaDto } from '../dtos/createMateria.dto';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
-import { IMateria } from 'src/database/entities/materias/interfaces/materia.entitie.interface';
+import { IMateria } from '../entities/interfaces/materia.entity.interface';
+import { Materia } from '../entities/materia.entity';
 
-@ApiTags('Materias')
-@Controller('materias')
+@ApiTags('Materia')
+@Controller('materia')
 export class MateriaController {
   constructor(private readonly materiaService: MateriaService) {}
 
   @ApiOperation({ summary: 'Cria uma nova matéria' })
+  @ApiBody({
+    description: 'Dados para criação',
+    type: CreateMateriaDto,
+  })
   @ApiResponse({
     status: 201,
     description: 'Matéria criada com sucesso',
-    type: CreateMateriaDto,
+    type: Materia,
   })
   @Post()
   async create(@Body() createMateriaDto: CreateMateriaDto): Promise<IMateria> {
@@ -22,14 +43,29 @@ export class MateriaController {
   }
 
   @ApiOperation({ summary: 'Lista todas as matérias' })
+  @ApiQuery({
+    name: 'limite',
+    required: true,
+    type: Number,
+    description: 'Limite de itens por página',
+  })
+  @ApiQuery({
+    name: 'pagina',
+    required: true,
+    type: Number,
+    description: 'Número da página',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de matérias retornada com sucesso',
-    type: [CreateMateriaDto],
+    type: [Materia],
   })
   @Get()
-  async findAll(): Promise<IMateria[]> {
-    return this.materiaService.findAll();
+  async findAll(
+    @Query('limite') limite: number,
+    @Query('pagina') pagina: number,
+  ): Promise<IMateria[]> {
+    return this.materiaService.findAll(limite, pagina);
   }
 
   @ApiOperation({ summary: 'Busca uma matéria pelo ID' })
@@ -37,23 +73,11 @@ export class MateriaController {
   @ApiResponse({
     status: 200,
     description: 'Matéria encontrada com sucesso',
-    type: CreateMateriaDto,
+    type: Materia,
   })
   @Get(':id')
   async findById(@Param('id') id: string): Promise<IMateria | null> {
     return this.materiaService.findById(id);
-  }
-
-  @ApiOperation({ summary: 'Busca as materias pelo nome' })
-  @ApiParam({ name: 'nome', description: 'Nome da matéria', required: true })
-  @ApiResponse({
-    status: 200,
-    description: 'Matérias encontradas com sucesso',
-    type: CreateMateriaDto,
-  })
-  @Get('nome/:nome')
-  async findByName(@Param('nome') nome: string): Promise<IMateria[]> {
-    return this.materiaService.findByName(nome);
   }
 
   @ApiOperation({ summary: 'Atualiza uma matéria pelo ID' })
@@ -65,14 +89,14 @@ export class MateriaController {
   @ApiResponse({
     status: 200,
     description: 'Matéria atualizada com sucesso',
-    type: UpdateMateriaDto,
+    type: Materia,
   })
   @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updateMateriaDto: UpdateMateriaDto,
   ): Promise<IMateria | null> {
-    return this.materiaService.update(id, updateMateriaDto);
+    return await this.materiaService.update(id, updateMateriaDto);
   }
 
   @ApiOperation({ summary: 'Remove uma matéria pelo ID' })

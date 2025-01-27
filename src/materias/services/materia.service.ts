@@ -1,44 +1,41 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { IMateriaRepository } from '../repositories/interfaces/materia.repository.interface';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { IMateria } from '../entities/interfaces/materia.entity.interface';
+import { MateriaRepository } from '../repositories/materia.repository';
 import { CreateMateriaDto } from '../dtos/createMateria.dto';
 import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
-import { IMateria } from 'src/database/entities/materias/interfaces/materia.entitie.interface';
-
 @Injectable()
 export class MateriaService {
-  constructor(
-    @Inject('IMateriaRepository') private readonly materiaRepository: IMateriaRepository,
-  ) {}
+  constructor(private readonly repository: MateriaRepository) {}
+
+  async findAll(limit: number, page: number): Promise<IMateria[]> {
+    return this.repository.findAll(limit, page);
+  }
+
+  async findById(id: string): Promise<IMateria> {
+    const materia = await this.repository.findById(id);
+    if (!materia) throw new NotFoundException('Materia não encontrada!');
+    return materia;
+  }
 
   async create(materia: CreateMateriaDto): Promise<IMateria> {
-    return this.materiaRepository.create(materia);
+    return await this.repository.create(materia);
   }
 
-  async findById(id: string): Promise<IMateria | null> {
-    return this.materiaRepository.findById(id);
-  }
-
-  async findAll(): Promise<IMateria[]> {
-    return this.materiaRepository.findAll({});
-  }
-
-  async update(id: string, materia: UpdateMateriaDto): Promise<IMateria | null> {
-    const materiaAtualizada = await this.materiaRepository.update(id, materia);
-    if (!materiaAtualizada) {
-      throw new NotFoundException(`Matéria com ID ${id} não encontrada para atualização.`);
+  async update(id: string, materia: UpdateMateriaDto): Promise<IMateria> {
+    const materiaEncontrada = await this.findById(id);
+    if (!materiaEncontrada) {
+      throw new Error('Matéria não encontrada');
     }
-    return materiaAtualizada;
-  }
 
-  async delete(id: string): Promise<IMateria | null> {
-    const materiaDeletada = await this.materiaRepository.delete(id);
-    if (!materiaDeletada) {
-      throw new NotFoundException(`Matéria com ID ${id} não encontrada para exclusão.`);
+    const materiaUpdate = {
+      id : id,
+      ...materia
     }
-    return materiaDeletada;
+
+    return await this.repository.update(materiaUpdate);
   }
 
-  async findByName(nome: string): Promise<IMateria[]> {
-    return this.materiaRepository.findByName(nome);
+  async delete(id: string): Promise<void> {
+    await this.repository.delete(id);
   }
 }
