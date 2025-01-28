@@ -21,9 +21,13 @@ export class Pergunta implements IPergunta {
   })
   enunciado: string;
 
-  @OneToMany(() => Materia, (materia) => materia.perguntas)
-  materia?: IMateria;
+  @ManyToOne(() => Materia, (materia) => materia.perguntas,{
+    nullable: false
+  })
+  materia: IMateria;
 
-  @ManyToOne(() => Alternativa, (alternativa) => alternativa.pergunta)
-  alternativas: IAlternativa[];
+  @OneToMany(() => Alternativa, (alternativa) => alternativa.pergunta,{
+    cascade: true
+  })
+  alternativas?: IAlternativa[];
 }

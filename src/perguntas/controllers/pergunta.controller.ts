@@ -38,7 +38,9 @@ export class PerguntaController {
     type: Pergunta,
   })
   @Post()
-  async create(@Body() createPerguntaDto: CreatePerguntaDto): Promise<IPergunta> {
+  async create(
+    @Body() createPerguntaDto: CreatePerguntaDto,
+  ): Promise<IPergunta> {
     return this.perguntaService.create(createPerguntaDto);
   }
 
@@ -68,6 +70,46 @@ export class PerguntaController {
     return this.perguntaService.findAll(limite, pagina);
   }
 
+  @ApiOperation({ summary: 'Lista todas as perguntas com as alternativas' })
+  @ApiQuery({
+    name: 'limite',
+    required: true,
+    type: Number,
+    description: 'Limite de perguntas por página',
+  })
+  @ApiQuery({
+    name: 'pagina',
+    required: true,
+    type: Number,
+    description: 'Número da página',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de perguntas com as alternativas retornada com sucesso',
+    type: [Pergunta],
+  })
+  @Get('/detalhe')
+  async findAllWithEntities(
+    @Query('limite') limite: number,
+    @Query('pagina') pagina: number,
+  ): Promise<IPergunta[]> {
+    return this.perguntaService.findAllWithEntities(limite, pagina);
+  }
+
+  @ApiOperation({ summary: 'Busca uma pergunta com as alternativas pelo ID' })
+  @ApiParam({ name: 'id', description: 'ID da pergunta', required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'Pergunta encontrada com sucesso',
+    type: Pergunta,
+  })
+  @Get('/detalhe/:id')
+  async findByIdWithEntities(
+    @Param('id') id: string,
+  ): Promise<IPergunta | null> {
+    return this.perguntaService.findByIdWithEntities(id);
+  }
+
   @ApiOperation({ summary: 'Busca uma pergunta pelo ID' })
   @ApiParam({ name: 'id', description: 'ID da pergunta', required: true })
   @ApiResponse({
@@ -95,8 +137,9 @@ export class PerguntaController {
   async update(
     @Param('id') id: string,
     @Body() updatePerguntaDto: UpdatePerguntaDto,
-  ): Promise<IPergunta | null> {
-    return this.perguntaService.update(id, updatePerguntaDto);
+  ): Promise<{ message: string }> {
+    await this.perguntaService.update(id, updatePerguntaDto);
+    return { message: 'Pergunta atualizada com sucesso' };
   }
 
   @ApiOperation({ summary: 'Remove uma pergunta pelo ID' })

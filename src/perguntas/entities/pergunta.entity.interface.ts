@@ -2,8 +2,8 @@ import { IAlternativa } from 'src/alternativas/entities/alternativa.entity.inter
 import { IMateria } from 'src/materias/entities/interfaces/materia.entity.interface';
 
 export interface IPergunta {
-  id?: string | undefined;
+  id?: string;
   enunciado: string;
-  materia?: IMateria;
+  materia: IMateria;
   alternativas?: IAlternativa[];
 }

@@ -1,11 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
   IsBoolean,
-  IsOptional,
-  IsUUID,
+  ValidateNested,
 } from 'class-validator';
+import { CreatePerguntaDto } from 'src/perguntas/dtos/createPergunta.dto';
 import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 
 export class CreateAlternativaDto {
@@ -25,15 +26,16 @@ export class CreateAlternativaDto {
   })
   correta: boolean;
 
-  @IsOptional()
-  @IsUUID()
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => CreatePerguntaDto)
   @ApiProperty({
     description: 'Pergunta relacionada à alternativa (ID da pergunta)',
     example: {
       id: '550e8400-e29b-41d4-a716-446655440000',
       enunciado: 'Qual é a fórmula da área do círculo?',
     },
-    required: false,
+    required: true,
   })
-  pergunta?: IPergunta;
+  pergunta: IPergunta;
 }

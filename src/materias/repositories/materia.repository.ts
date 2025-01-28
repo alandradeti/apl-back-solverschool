@@ -1,10 +1,17 @@
-import { DeepPartial } from 'typeorm';
-import { IMateria } from '../entities/interfaces/materia.entity.interface';
+import { Injectable } from '@nestjs/common';
+import { Materia } from '../entities/materia.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DatabaseRepository } from 'src/database/repositories/database.repository';
 
-export abstract class MateriaRepository {
-  abstract findAll(limite: number, pagina: number): Promise<IMateria[] | null>;
-  abstract findById(id: string): Promise<IMateria | null>;
-  abstract create(materia: IMateria): Promise<IMateria | null>;
-  abstract update(materia: DeepPartial<IMateria>): Promise<IMateria | null>;
-  abstract delete(id: string): Promise<void>;
+@Injectable()
+export class MateriaRepository extends DatabaseRepository<Materia> {
+  constructor(
+    @InjectRepository(Materia)
+    private readonly materiaRepository: Repository<Materia>,
+  ) {
+    super(materiaRepository);  
+  }
+
+  //Métodos personalizados para Materia
 }

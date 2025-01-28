@@ -21,11 +21,11 @@ export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
     description: 'Perguntas associadas à matéria (atualização opcional)',
     example: [
       {
-        id: '603dcb7f3f015d3f8c4d8f1b',
+        id: '0444d7f2-e5fa-4817-b7a2-8be7813a3cb9',
         enunciado: 'Qual é a fórmula da área do círculo?',
       },
       {
-        id: '603dcb7f3f015d3f8c4d8f2a',
+        id: 'b8613686-9cad-4b67-9d31-c32de262a6f9',
         enunciado: 'Qual é a fórmula da área do quadrado?',
       },
     ],

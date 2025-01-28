@@ -26,11 +26,11 @@ export class CreateMateriaDto {
     description: 'Perguntas associadas à matéria',
     example: [
       {
-        id: '603dcb7f3f015d3f8c4d8f1b',
+        id: 'cb523d0c-67bb-45a3-bf48-dcb99f7d6dc8',
         enunciado: 'Qual é a fórmula da área do círculo?',
       },
       {
-        id: '603dcb7f3f015d3f8c4d8f2a',
+        id: '3792fee5-70d6-431f-8195-2b905e69f9b3',
         enunciado: 'Qual é a fórmula da área do quadrado?',
       },
     ],

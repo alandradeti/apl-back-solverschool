@@ -21,6 +21,7 @@ import {
 import { UpdateMateriaDto } from '../dtos/updateMateria.dto';
 import { IMateria } from '../entities/interfaces/materia.entity.interface';
 import { Materia } from '../entities/materia.entity';
+import { PAGINATION } from 'src/database/contants/database.constants';
 
 @ApiTags('Materia')
 @Controller('materia')
@@ -62,10 +63,50 @@ export class MateriaController {
   })
   @Get()
   async findAll(
+    @Query('limite') limite: number = PAGINATION.DEFAULT_LIMIT,
+    @Query('pagina') pagina: number = PAGINATION.DEFAULT_PAGE,
+  ): Promise<IMateria[]> {
+    return this.materiaService.findAll(limite, pagina);
+  }
+
+  @ApiOperation({ summary: 'Lista todas as matérias com as perguntas' })
+  @ApiQuery({
+    name: 'limite',
+    required: true,
+    type: Number,
+    description: 'Limite de matérias por página',
+  })
+  @ApiQuery({
+    name: 'pagina',
+    required: true,
+    type: Number,
+    description: 'Número da página',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de matérias com perguntas retornada com sucesso',
+    type: [Materia],
+  })
+  @Get('/detalhe')
+  async findAllWithEntities(
     @Query('limite') limite: number,
     @Query('pagina') pagina: number,
   ): Promise<IMateria[]> {
-    return this.materiaService.findAll(limite, pagina);
+    return this.materiaService.findAllWithEntities(limite, pagina);
+  }
+
+  @ApiOperation({ summary: 'Busca uma matéria com as perguntas pelo ID' })
+  @ApiParam({ name: 'id', description: 'ID da matéria', required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'Matéria encontrada com sucesso',
+    type: Materia,
+  })
+  @Get('/detalhe/:id')
+  async findByIdWithEntities(
+    @Param('id') id: string,
+  ): Promise<IMateria | null> {
+    return this.materiaService.findByIdWithEntities(id);
   }
 
   @ApiOperation({ summary: 'Busca uma matéria pelo ID' })
@@ -95,8 +136,9 @@ export class MateriaController {
   async update(
     @Param('id') id: string,
     @Body() updateMateriaDto: UpdateMateriaDto,
-  ): Promise<IMateria | null> {
-    return await this.materiaService.update(id, updateMateriaDto);
+  ): Promise<{ message: string }> {
+    await this.materiaService.update(id, updateMateriaDto);
+    return { message: 'Matéria atualizada com sucesso' };
   }
 
   @ApiOperation({ summary: 'Remove uma matéria pelo ID' })

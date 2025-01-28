@@ -4,5 +4,5 @@ export interface IAlternativa {
   id?: string | undefined;
   descricao: string;
   correta: boolean;
-  pergunta?: IPergunta;
+  pergunta: IPergunta;
 }

@@ -1,9 +1,17 @@
-import { DeepPartial } from 'typeorm';
-import { IAlternativa } from '../entities/alternativa.entity.interface';
-export abstract class AlternativaRepository {
-  abstract findAll(limite: number, pagina: number): Promise<IAlternativa[] | null>;
-  abstract findById(id: string): Promise<IAlternativa | null>;
-  abstract create(alternativa: IAlternativa): Promise<IAlternativa | null>;
-  abstract update(alternativa: DeepPartial<IAlternativa>): Promise<IAlternativa| null>;
-  abstract delete(id: string): Promise<void>;
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DatabaseRepository } from 'src/database/repositories/database.repository';
+import { Alternativa } from '../entities/alternativa.entity';
+
+@Injectable()
+export class AlternativaRepository extends DatabaseRepository<Alternativa> {
+  constructor(
+    @InjectRepository(Alternativa)
+    private readonly alternativaRepository: Repository<Alternativa>,
+  ) {
+    super(alternativaRepository);
+  }
+
+  //Métodos personalizados para Alternativa
 }

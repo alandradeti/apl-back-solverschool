@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { CreatePerguntaDto } from 'src/perguntas/dtos/createPergunta.dto';
 import { UpdatePerguntaDto } from 'src/perguntas/dtos/updatePergunta.dto';
 import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
@@ -6,19 +10,51 @@ import { PerguntaRepository } from 'src/perguntas/repositories/pergunta.reposito
 
 @Injectable()
 export class PerguntaService {
-  constructor(private readonly repository: PerguntaRepository) {}
+  constructor(private readonly perguntaRepository: PerguntaRepository) {}
 
   async findAll(limit: number, page: number): Promise<IPergunta[]> {
     try {
-      return await this.repository.findAll(limit, page);
+      return await this.perguntaRepository.findAll(limit, page);
     } catch (error) {
       throw new InternalServerErrorException('Erro ao buscar perguntas.');
     }
   }
 
+  async findAllWithEntities(
+    limit: number,
+    page: number,
+  ): Promise<IPergunta[]> {
+    try {
+      const populateOptions = { alternativas: true };
+      return await this.perguntaRepository.findAllWithEntities(
+        limit,
+        page,
+        populateOptions,
+      );
+    } catch (error) {
+      throw new NotFoundException('Erro ao buscar perguntas.');
+    }
+  }
+
+  async findByIdWithEntities(id: string): Promise<IPergunta> {
+    try {
+      const populateOptions = { alternativas: true };
+      const alternativa = await this.perguntaRepository.findByIdWithEntities(
+        id,
+        populateOptions,
+      );
+      if (!alternativa) {
+        throw new NotFoundException('Pergunta não encontrada!');
+      }
+      return alternativa;
+    } catch (error) {
+      throw new NotFoundException('Pergunta não encontrada!');
+    }
+  }
+
   async findById(id: string): Promise<IPergunta> {
     try {
-      const pergunta = await this.repository.findById(id);
+      const pergunta = await this.perguntaRepository.findById(id);
       if (!pergunta) {
         throw new NotFoundException('Pergunta não encontrada!');
       }
@@ -30,25 +66,15 @@ export class PerguntaService {
 
   async create(pergunta: CreatePerguntaDto): Promise<IPergunta> {
     try {
-      return await this.repository.create(pergunta);
+      return await this.perguntaRepository.create(pergunta);
     } catch (error) {
       throw new InternalServerErrorException('Erro ao criar pergunta.');
     }
   }
 
-  async update(id: string, pergunta: UpdatePerguntaDto): Promise<IPergunta> {
+  async update(id: string, pergunta: UpdatePerguntaDto): Promise<void> {
     try {
-      const perguntaEncontrada = await this.findById(id);
-      if (!perguntaEncontrada) {
-        throw new NotFoundException('Pergunta não encontrada');
-      }
-
-      const perguntaUpdate = {
-        id,
-        ...pergunta,
-      };
-
-      return await this.repository.update(perguntaUpdate);
+      await this.perguntaRepository.update(id, pergunta);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -59,7 +85,7 @@ export class PerguntaService {
 
   async delete(id: string): Promise<void> {
     try {
-      await this.repository.delete(id);
+      await this.perguntaRepository.delete(id);
     } catch (error) {
       throw new InternalServerErrorException('Erro ao excluir pergunta.');
     }

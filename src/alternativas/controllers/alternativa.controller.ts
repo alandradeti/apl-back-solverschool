@@ -42,6 +42,44 @@ export class AlternativaController {
     return this.alternativaService.create(createAlternativaDto);
   }
 
+  @ApiOperation({ summary: 'Lista todas as alternativas com as perguntas' })
+  @ApiQuery({
+    name: 'limite',
+    required: true,
+    type: Number,
+    description: 'Limite de alternativas por página',
+  })
+  @ApiQuery({
+    name: 'pagina',
+    required: true,
+    type: Number,
+    description: 'Número da página',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de alternativas com perguntas retornada com sucesso',
+    type: [Alternativa],
+  })
+  @Get('/detalhe')
+  async findAllWithEntities(
+    @Query('limite') limite: number,
+    @Query('pagina') pagina: number,
+  ): Promise<IAlternativa[]> {
+    return this.alternativaService.findAllWithEntities(limite, pagina);
+  }
+
+  @ApiOperation({ summary: 'Busca uma alternativa com a pergunta pelo ID' })
+  @ApiParam({ name: 'id', description: 'ID da alternativa', required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'Alternativa encontrada com sucesso',
+    type: Alternativa,
+  })
+  @Get('/detalhe/:id')
+  async findByIdWithEntities(@Param('id') id: string): Promise<IAlternativa | null> { 
+    return this.alternativaService.findByIdWithEntities(id);
+  }
+
   @ApiOperation({ summary: 'Lista todas as alternativas' })
   @ApiQuery({
     name: 'limite',
@@ -95,8 +133,9 @@ export class AlternativaController {
   async update(
     @Param('id') id: string,
     @Body() updateAlternativaDto: UpdateAlternativaDto,
-  ): Promise<IAlternativa | null> {
-    return this.alternativaService.update(id, updateAlternativaDto);
+  ): Promise<{ message: string }> {
+    this.alternativaService.update(id, updateAlternativaDto);
+    return { message: 'Alternativa atualizada com sucesso' };
   }
 
   @ApiOperation({ summary: 'Remove uma alternativa pelo ID' })

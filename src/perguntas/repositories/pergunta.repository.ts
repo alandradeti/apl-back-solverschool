@@ -1,9 +1,17 @@
-import { DeepPartial } from 'typeorm';
-import { IPergunta } from '../entities/pergunta.entity.interface';
-export abstract class PerguntaRepository {
-  abstract findAll(limite: number, pagina: number): Promise<IPergunta[] | null>;
-  abstract findById(id: string): Promise<IPergunta | null>;
-  abstract create(pergunta: IPergunta): Promise<IPergunta | null>;
-  abstract update(pergunta: DeepPartial<IPergunta>): Promise<IPergunta| null>;
-  abstract delete(id: string): Promise<void>;
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DatabaseRepository } from 'src/database/repositories/database.repository';
+import { Pergunta } from '../entities/pergunta.entity';
+
+@Injectable()
+export class PerguntaRepository extends DatabaseRepository<Pergunta> {
+  constructor(
+    @InjectRepository(Pergunta)
+    private readonly perguntaRepository: Repository<Pergunta>,
+  ) {
+    super(perguntaRepository);  
+  }
+
+  //Métodos personalizados para Pergunta
 }
