@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseRepository } from 'src/database/repositories/database.repository';
 import { IAlternativaRepository } from './interfaces/alternativa.repository.interface';
 import { IAlternativaDocument } from '../documents/interfaces/alternativa.document.interface';
+import { ObjectIdValue } from 'src/database/constants/database.constants';
 
 @Injectable()
 export class AlternativaRepository
@@ -12,13 +13,15 @@ export class AlternativaRepository
     super(alternativaModel);
   }
 
-  // Buscar alternativas pela questão
-  async findByQuestaoIdWithPopulate(
-    questaoId: string,
+  // Buscar alternativas pela pergunta
+  async findByPerguntaIdWithPopulate(
+    PerguntaId: string,
   ): Promise<IAlternativaDocument[]> {
-    return this.alternativaModel
-      .find({ questaoId })
-      .populate([{ path: 'questaoId', select: 'enunciado' }])
+    const alternativas = await this.alternativaModel
+      .find({ PerguntaId: new ObjectIdValue(PerguntaId) })
+      .populate([{ path: 'PerguntaId', select: 'enunciado' }])
       .exec();
+
+    return alternativas;
   }
 }

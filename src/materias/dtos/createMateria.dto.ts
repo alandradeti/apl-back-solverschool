@@ -10,6 +10,8 @@ export class CreateMateriaDto {
   })
   nome: string;
 
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty({
     description: 'Descrição da matéria',
     example: 'A matéria de matemática aborda álgebra e cálculo.',

@@ -18,6 +18,7 @@ import { CreateAlternativaDto } from '../dtos/createAlternativa.dto';
 import { AlternativaService } from '../services/alternativa.service';
 import { IAlternativaDocument } from '../documents/interfaces/alternativa.document.interface';
 import { UpdateAlternativaDto } from '../dtos/updateAlternativa.dto';
+import { AlternativaResponseDto } from '../dtos/alternativaResponse.dto';
 
 @ApiTags('Alternativas')
 @Controller('alternativas')
@@ -25,10 +26,14 @@ export class AlternativaController {
   constructor(private readonly alternativaService: AlternativaService) {}
 
   @ApiOperation({ summary: 'Cria uma nova alternativa' })
+  @ApiBody({
+    description: 'Dados para criação',
+    type: CreateAlternativaDto,
+  })
   @ApiResponse({
     status: 201,
     description: 'Alternativa criada com sucesso',
-    type: CreateAlternativaDto,
+    type: AlternativaResponseDto,
   })
   @Post()
   async create(
@@ -41,7 +46,7 @@ export class AlternativaController {
   @ApiResponse({
     status: 200,
     description: 'Lista de alternativas retornada com sucesso',
-    type: [CreateAlternativaDto],
+    type: [AlternativaResponseDto],
   })
   @Get()
   async findAll(): Promise<IAlternativaDocument[]> {
@@ -53,7 +58,7 @@ export class AlternativaController {
   @ApiResponse({
     status: 200,
     description: 'Alternativa encontrada com sucesso',
-    type: CreateAlternativaDto,
+    type: AlternativaResponseDto,
   })
   @Get(':id')
   async findById(
@@ -62,18 +67,22 @@ export class AlternativaController {
     return this.alternativaService.findById(id);
   }
 
-  @ApiOperation({ summary: 'Busca alternativas pelo ID da questão' })
-  @ApiParam({ name: 'questaoId', description: 'ID da questão', required: true })
+  @ApiOperation({ summary: 'Busca alternativas pelo ID da pergunta' })
+  @ApiParam({
+    name: 'PerguntaId',
+    description: 'ID da pergunta',
+    required: true,
+  })
   @ApiResponse({
     status: 200,
     description: 'Alternativas encontradas com sucesso',
-    type: [CreateAlternativaDto],
+    type: [AlternativaResponseDto],
   })
-  @Get('questao/:questaoId')
-  async findByQuestaoId(
-    @Param('questaoId') questaoId: string,
+  @Get('Pergunta/:PerguntaId')
+  async findByPerguntaId(
+    @Param('PerguntaId') PerguntaId: string,
   ): Promise<IAlternativaDocument[]> {
-    return this.alternativaService.findByQuestaoId(questaoId);
+    return this.alternativaService.findByPerguntaId(PerguntaId);
   }
 
   @ApiOperation({ summary: 'Atualiza uma alternativa pelo ID' })
@@ -85,7 +94,7 @@ export class AlternativaController {
   @ApiResponse({
     status: 200,
     description: 'Alternativa atualizada com sucesso',
-    type: UpdateAlternativaDto,
+    type: AlternativaResponseDto,
   })
   @Put(':id')
   async update(

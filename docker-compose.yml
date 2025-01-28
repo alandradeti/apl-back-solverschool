@@ -3,7 +3,10 @@ services:
     build:
       context: .
     ports:
-       - "${PORT_APP}:${PORT_APP}"
+      - "${PORT_APP}:${PORT_APP}"
+    volumes:
+      - ./src:/usr/app/src
+    command: npx nodemon --watch src --exec "npm run start:dev"
     depends_on:
       - mongodb
     networks:
