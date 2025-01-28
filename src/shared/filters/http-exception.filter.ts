@@ -24,7 +24,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       switch (exception.code) {
         case 11000: // Duplicação de chave
           status = HttpStatus.CONFLICT;
-          message = 'Duplicated key error: A resource with the given identifier already exists.';
+          message =
+            'Duplicated key error: A resource with the given identifier already exists.';
           break;
         default:
           message = `MongoDB Error: ${exception.message}`;
