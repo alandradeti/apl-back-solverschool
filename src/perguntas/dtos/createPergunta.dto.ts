@@ -5,9 +5,9 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { IAlternativa } from 'src/alternativas/entities/alternativa.entity.interface';
 import { CreateMateriaDto } from 'src/materias/dtos/createMateria.dto';
 import { Type } from 'class-transformer';
+import { IAlternativa } from 'src/alternativas/entities/interfaces/alternativa.entity.interface';
 
 export class CreatePerguntaDto {
   @IsNotEmpty()

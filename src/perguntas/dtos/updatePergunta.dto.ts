@@ -2,10 +2,7 @@ import { PartialType } from '@nestjs/mapped-types';
 import { CreatePerguntaDto } from './createPergunta.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IMateria } from 'src/materias/entities/interfaces/materia.entity.interface';
-import { IAlternativa } from 'src/alternativas/entities/alternativa.entity.interface';
-import { UpdateMateriaDto } from 'src/materias/dtos/updateMateria.dto';
-import { IsOptional, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IAlternativa } from 'src/alternativas/entities/interfaces/alternativa.entity.interface';
 
 export class UpdatePerguntaDto extends PartialType(CreatePerguntaDto) {
   @ApiProperty({

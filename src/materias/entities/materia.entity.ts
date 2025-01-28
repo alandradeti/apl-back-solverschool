@@ -1,7 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IMateria } from './interfaces/materia.entity.interface';
 import { Pergunta } from 'src/perguntas/entities/pergunta.entity';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 
 @Entity({
   name: 'materia',
@@ -30,5 +29,5 @@ export class Materia implements IMateria {
   @OneToMany(() => Pergunta, (pergunta) => pergunta.materia, {
     cascade: true,
   })
-  perguntas?: IPergunta[];
+  perguntas?: Pergunta[];
 }

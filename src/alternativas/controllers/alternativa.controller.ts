@@ -20,8 +20,7 @@ import { CreateAlternativaDto } from '../dtos/createAlternativa.dto';
 import { AlternativaService } from '../services/alternativa.service';
 import { UpdateAlternativaDto } from '../dtos/updateAlternativa.dto';
 import { Alternativa } from '../entities/alternativa.entity';
-import { IAlternativa } from '../entities/alternativa.entity.interface';
-
+import { IAlternativa } from '../entities/interfaces/alternativa.entity.interface';
 @ApiTags('Alternativas')
 @Controller('alternativas')
 export class AlternativaController {

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
+import { IPergunta } from 'src/perguntas/entities/interfaces/pergunta.entity.interface';
 
 export class CreateMateriaDto {
   @IsString()

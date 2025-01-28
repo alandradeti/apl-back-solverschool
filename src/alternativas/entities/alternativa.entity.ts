@@ -1,7 +1,6 @@
 import { Pergunta } from 'src/perguntas/entities/pergunta.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { IAlternativa } from './alternativa.entity.interface';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
+import { IAlternativa } from './interfaces/alternativa.entity.interface';
 
 @Entity({
   name: 'alternativa',
@@ -29,5 +28,5 @@ export class Alternativa implements IAlternativa {
   @ManyToOne(() => Pergunta, (pergunta) => pergunta.alternativas,{
     nullable: false
   })
-  pergunta: IPergunta;
+  pergunta: Pergunta;
 }

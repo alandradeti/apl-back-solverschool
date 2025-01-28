@@ -7,7 +7,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CreatePerguntaDto } from 'src/perguntas/dtos/createPergunta.dto';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
+import { IPergunta } from 'src/perguntas/entities/interfaces/pergunta.entity.interface';
 
 export class CreateAlternativaDto {
   @IsNotEmpty()

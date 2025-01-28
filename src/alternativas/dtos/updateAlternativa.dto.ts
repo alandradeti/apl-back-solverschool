@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreateAlternativaDto } from './createAlternativa.dto';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
+import { IPergunta } from 'src/perguntas/entities/interfaces/pergunta.entity.interface';
 
 export class UpdateAlternativaDto extends PartialType(CreateAlternativaDto) {
   @ApiProperty({

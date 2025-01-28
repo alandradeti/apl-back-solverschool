@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { CreatePerguntaDto } from 'src/perguntas/dtos/createPergunta.dto';
 import { UpdatePerguntaDto } from 'src/perguntas/dtos/updatePergunta.dto';
-import { IPergunta } from 'src/perguntas/entities/pergunta.entity.interface';
 import { PerguntaRepository } from 'src/perguntas/repositories/pergunta.repository';
+import { IPergunta } from '../entities/interfaces/pergunta.entity.interface';
 
 @Injectable()
 export class PerguntaService {

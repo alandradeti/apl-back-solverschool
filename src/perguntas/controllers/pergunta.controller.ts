@@ -20,7 +20,7 @@ import { CreatePerguntaDto } from '../dtos/createPergunta.dto';
 import { PerguntaService } from '../services/pergunta.service';
 import { UpdatePerguntaDto } from '../dtos/updatePergunta.dto';
 import { Pergunta } from '../entities/pergunta.entity';
-import { IPergunta } from '../entities/pergunta.entity.interface';
+import { IPergunta } from '../entities/interfaces/pergunta.entity.interface';
 
 @ApiTags('Perguntas')
 @Controller('perguntas')

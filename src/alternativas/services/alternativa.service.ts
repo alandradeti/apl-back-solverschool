@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { UpdateAlternativaDto } from '../dtos/updateAlternativa.dto';
 import { CreateAlternativaDto } from '../dtos/createAlternativa.dto';
-import { IAlternativa } from '../entities/alternativa.entity.interface';
 import { AlternativaRepository } from '../repositories/alternativa.repository';
+import { IAlternativa } from '../entities/interfaces/alternativa.entity.interface';
 
 @Injectable()
 export class AlternativaService {
