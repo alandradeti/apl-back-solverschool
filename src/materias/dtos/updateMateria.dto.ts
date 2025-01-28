@@ -1,6 +1,8 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { CreateMateriaDto } from './createMateria.dto';
 import { IPergunta } from 'src/perguntas/entities/interfaces/pergunta.entity.interface';
+import { IProfessor } from 'src/professores/entities/interfaces/professor.entity.interface';
+import { IProva } from 'src/provas/entities/interfaces/prova.entity.interface';
 
 export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
   @ApiProperty({
@@ -13,7 +15,7 @@ export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
   @ApiProperty({
     description: 'Descrição da matéria (atualização opcional)',
     example: 'A matéria de matemática aborda álgebra e cálculo.',
-    required: false, 
+    required: false,
   })
   descricao?: string;
 
@@ -32,4 +34,28 @@ export class UpdateMateriaDto extends PartialType(CreateMateriaDto) {
     required: false,
   })
   perguntas?: IPergunta[];
+
+  @ApiProperty({
+    description: 'Professores associados à matéria',
+    example: [
+      {
+        id: 'cb523d0c-67bb-45a3-bf48-dcb99f7d6dc8',
+        nome: 'João da Silva',
+      },
+    ],
+    required: false,
+  })
+  professores?: IProfessor[];
+
+  @ApiProperty({
+    description: 'Provas associadas à matéria',
+    example: [
+      {
+        id: 'cb523d0c-67bb-45a3-bf48-dcb99f7d6dc8',
+        titulo: 'Prova 1',
+      },
+    ],
+    required: false,
+  })
+  provas?: IProva[];
 }

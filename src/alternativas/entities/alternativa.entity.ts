@@ -21,7 +21,7 @@ export class Alternativa implements IAlternativa {
   @Column({
     name: 'correta',
     type: 'boolean',
-    nullable: false,
+    default: false,
   })
   correta: boolean;
 

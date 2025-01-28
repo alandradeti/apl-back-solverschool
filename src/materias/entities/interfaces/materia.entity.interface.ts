@@ -7,6 +7,6 @@ export interface IMateria {
   nome: string;
   descricao: string;
   perguntas?: IPergunta[];
-  professores: IProfessor[]
+  professores?: IProfessor[]
   provas?: IProva[];
 }

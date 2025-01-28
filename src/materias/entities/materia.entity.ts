@@ -11,7 +11,7 @@ export class Materia implements IMateria {
   @PrimaryGeneratedColumn('uuid', {
     name: 'id',
   })
-  id?: string | undefined;
+  id?: string;
 
   @Column({
     name: 'nome',
@@ -33,11 +33,11 @@ export class Materia implements IMateria {
   })
   perguntas?: Pergunta[];
 
-  @ManyToMany(() => Professor, (professor) => professor.materias, {
-    nullable: false,
-  })
-  professores: Professor[];
+  @ManyToMany(() => Professor, (professor) => professor.materias)
+  professores?: Professor[];
 
-  @OneToMany(() => Prova, (prova) => prova.materia)
+  @OneToMany(() => Prova, (prova) => prova.materia, {
+    cascade: true,
+  })
   provas?: Prova[];
 }

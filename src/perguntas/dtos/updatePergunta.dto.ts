@@ -3,6 +3,7 @@ import { CreatePerguntaDto } from './createPergunta.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IMateria } from 'src/materias/entities/interfaces/materia.entity.interface';
 import { IAlternativa } from 'src/alternativas/entities/interfaces/alternativa.entity.interface';
+import { IProvaPergunta } from 'src/provaPerguntas/entities/interfaces/provaPergunta.entity.interface';
 
 export class UpdatePerguntaDto extends PartialType(CreatePerguntaDto) {
   @ApiProperty({
@@ -39,4 +40,18 @@ export class UpdatePerguntaDto extends PartialType(CreatePerguntaDto) {
     required: false,
   })
   alternativas?: IAlternativa[];
+
+  @ApiProperty({
+    description: 'IDs da relação de provas e perguntas',
+    example: [
+      {
+        id: 'af67065b-23c0-4ee4-ac83-79a8dcfe284d',
+      },
+      {
+        id: 'a10e2a53-5a02-406b-aa80-961ba271aeb3',
+      },
+    ],
+    required: false,
+  })
+  provaPerguntas?: IProvaPergunta[];
 }

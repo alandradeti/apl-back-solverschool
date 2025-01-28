@@ -8,6 +8,7 @@ import {
 import { CreateMateriaDto } from 'src/materias/dtos/createMateria.dto';
 import { Type } from 'class-transformer';
 import { IAlternativa } from 'src/alternativas/entities/interfaces/alternativa.entity.interface';
+import { IProvaPergunta } from 'src/provaPerguntas/entities/interfaces/provaPergunta.entity.interface';
 
 export class CreatePerguntaDto {
   @IsNotEmpty()
@@ -50,4 +51,19 @@ export class CreatePerguntaDto {
     required: false,
   })
   alternativas?: IAlternativa[];
+
+  @IsOptional()
+  @ApiProperty({
+    description: 'IDs da relação de provas e perguntas',
+    example: [
+      {
+        id: 'af67065b-23c0-4ee4-ac83-79a8dcfe284d',
+      },
+      {
+        id: 'a10e2a53-5a02-406b-aa80-961ba271aeb3',
+      },
+    ],
+    required: false,
+  })
+  provaPerguntas?: IProvaPergunta[];
 }

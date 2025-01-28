@@ -31,5 +31,5 @@ export class Pergunta implements IPergunta {
   alternativas?: Alternativa[];
 
   @OneToMany(() => ProvaPergunta, (provaPergunta) => provaPergunta.pergunta)
-  provaPerguntas: ProvaPergunta[];
+  provaPerguntas?: ProvaPergunta[];
 }
