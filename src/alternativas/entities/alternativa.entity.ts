@@ -25,8 +25,8 @@ export class Alternativa implements IAlternativa {
   })
   correta: boolean;
 
-  @ManyToOne(() => Pergunta, (pergunta) => pergunta.alternativas,{
-    nullable: false
+  @ManyToOne(() => Pergunta, (pergunta) => pergunta.alternativas, {
+    nullable: false,
   })
   pergunta: Pergunta;
 }

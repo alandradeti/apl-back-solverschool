@@ -84,7 +84,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
   private getErrorMessage(exception: HttpException): string {
     const response = exception.getResponse();
     // Caso o `response` seja um objeto, podemos pegar a mensagem diretamente
-    if (typeof response === 'object' && response !== null && 'message' in response) {
+    if (
+      typeof response === 'object' &&
+      response !== null &&
+      'message' in response
+    ) {
       return (response as any).message || 'Erro desconhecido';
     }
     // Caso contrário, retornamos a resposta padrão
@@ -93,7 +97,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
   private getQueryErrorMessage(exception: QueryFailedError): string {
     // Verificar a mensagem do erro
-    const errorMessage = exception.message || 'Erro ao executar consulta no banco de dados';
+    const errorMessage =
+      exception.message || 'Erro ao executar consulta no banco de dados';
     // Algumas mensagens podem conter o código do erro SQL, que podemos extrair manualmente
     if (exception.message.includes('duplicate key value')) {
       return 'Conflito de dados: chave duplicada';

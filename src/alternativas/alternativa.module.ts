@@ -5,11 +5,8 @@ import { AlternativaController } from './controllers/alternativa.controller';
 import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [DatabaseModule], 
-  providers: [
-    AlternativaService,
-    AlternativaRepository
-  ],
+  imports: [DatabaseModule],
+  providers: [AlternativaService, AlternativaRepository],
   controllers: [AlternativaController],
 })
 export class AlternativaModule {}

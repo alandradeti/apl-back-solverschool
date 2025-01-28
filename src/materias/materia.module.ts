@@ -5,9 +5,9 @@ import { MateriaController } from './controllers/materia.controller';
 import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [DatabaseModule], 
-  providers: [MateriaService, MateriaRepository],  
-  exports: [MateriaService], 
+  imports: [DatabaseModule],
+  providers: [MateriaService, MateriaRepository],
+  exports: [MateriaService],
   controllers: [MateriaController],
 })
 export class MateriaModule {}

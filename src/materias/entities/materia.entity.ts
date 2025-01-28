@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IMateria } from './interfaces/materia.entity.interface';
 import { Pergunta } from 'src/perguntas/entities/pergunta.entity';
 import { Professor } from 'src/professores/entities/professor.entity';

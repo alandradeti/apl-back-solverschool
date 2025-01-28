@@ -20,10 +20,7 @@ export class MateriaService {
     }
   }
 
-  async findAllWithEntities(
-    limit: number,
-    page: number,
-  ): Promise<IMateria[]> {
+  async findAllWithEntities(limit: number, page: number): Promise<IMateria[]> {
     try {
       const populateOptions = { perguntas: true };
       return await this.materiaRepository.findAllWithEntities(

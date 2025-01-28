@@ -27,19 +27,19 @@ export class Professor implements IProfessor {
   })
   matricula: string;
 
-  @OneToOne(() => Usuario, (usuario) => usuario.professor,{
-    nullable: false
+  @OneToOne(() => Usuario, (usuario) => usuario.professor, {
+    nullable: false,
   })
   @JoinColumn()
   usuario: Usuario;
 
   @ManyToMany(() => Materia, (materia) => materia.professores, {
-    nullable: false
+    nullable: false,
   })
   materias: Materia[];
 
-  @ManyToMany(() => Turma, (turma) => turma.professores,{
-    nullable: false
+  @ManyToMany(() => Turma, (turma) => turma.professores, {
+    nullable: false,
   })
   turmas: Turma[];
 

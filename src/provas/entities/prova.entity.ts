@@ -32,17 +32,17 @@ export class Prova implements IProva {
   materia: Materia;
 
   @ManyToMany(() => Aluno, (aluno) => aluno.provas, {
-    nullable: false
+    nullable: false,
   })
   alunos: Aluno[];
 
   @ManyToMany(() => Professor, (professor) => professor.provas, {
-    nullable: false
+    nullable: false,
   })
   professores: Professor[];
 
   @OneToMany(() => ProvaPergunta, (provaPergunta) => provaPergunta.pergunta, {
-    nullable: false
+    nullable: false,
   })
   provaPerguntas: ProvaPergunta[];
 }

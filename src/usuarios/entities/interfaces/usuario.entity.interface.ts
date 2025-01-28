@@ -1,6 +1,6 @@
-import { IAluno } from "src/alunos/entities/interfaces/aluno.entity.interface";
-import { IProfessor } from "src/professores/entities/interfaces/professor.entity.interface";
-import { TipoUsuario } from "src/usuarios/enums/usuario.enum";
+import { IAluno } from 'src/alunos/entities/interfaces/aluno.entity.interface';
+import { IProfessor } from 'src/professores/entities/interfaces/professor.entity.interface';
+import { TipoUsuario } from 'src/usuarios/enums/usuario.enum';
 
 export interface IUsuario {
   id?: string;

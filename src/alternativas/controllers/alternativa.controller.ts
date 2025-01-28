@@ -37,7 +37,9 @@ export class AlternativaController {
     type: Alternativa,
   })
   @Post()
-  async create(@Body() createAlternativaDto: CreateAlternativaDto): Promise<IAlternativa> {
+  async create(
+    @Body() createAlternativaDto: CreateAlternativaDto,
+  ): Promise<IAlternativa> {
     return this.alternativaService.create(createAlternativaDto);
   }
 
@@ -75,7 +77,9 @@ export class AlternativaController {
     type: Alternativa,
   })
   @Get('/detalhe/:id')
-  async findByIdWithEntities(@Param('id') id: string): Promise<IAlternativa | null> { 
+  async findByIdWithEntities(
+    @Param('id') id: string,
+  ): Promise<IAlternativa | null> {
     return this.alternativaService.findByIdWithEntities(id);
   }
 

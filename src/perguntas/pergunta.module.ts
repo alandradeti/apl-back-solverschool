@@ -5,11 +5,8 @@ import { PerguntaService } from './services/pergunta.service';
 import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [DatabaseModule], 
-  providers: [
-    PerguntaService,
-    PerguntaRepository
-  ],
+  imports: [DatabaseModule],
+  providers: [PerguntaService, PerguntaRepository],
   controllers: [PerguntaController],
 })
 export class PerguntaModule {}

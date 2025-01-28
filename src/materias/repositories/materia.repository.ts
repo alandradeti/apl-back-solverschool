@@ -10,7 +10,7 @@ export class MateriaRepository extends DatabaseRepository<Materia> {
     @InjectRepository(Materia)
     private readonly materiaRepository: Repository<Materia>,
   ) {
-    super(materiaRepository);  
+    super(materiaRepository);
   }
 
   //Métodos personalizados para Materia

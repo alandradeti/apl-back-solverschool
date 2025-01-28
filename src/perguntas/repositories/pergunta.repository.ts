@@ -10,7 +10,7 @@ export class PerguntaRepository extends DatabaseRepository<Pergunta> {
     @InjectRepository(Pergunta)
     private readonly perguntaRepository: Repository<Pergunta>,
   ) {
-    super(perguntaRepository);  
+    super(perguntaRepository);
   }
 
   //Métodos personalizados para Pergunta

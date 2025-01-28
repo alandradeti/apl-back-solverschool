@@ -20,10 +20,7 @@ export class PerguntaService {
     }
   }
 
-  async findAllWithEntities(
-    limit: number,
-    page: number,
-  ): Promise<IPergunta[]> {
+  async findAllWithEntities(limit: number, page: number): Promise<IPergunta[]> {
     try {
       const populateOptions = { alternativas: true };
       return await this.perguntaRepository.findAllWithEntities(

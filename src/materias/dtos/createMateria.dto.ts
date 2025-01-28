@@ -51,7 +51,7 @@ export class CreateMateriaDto {
     ],
     required: false,
   })
-  professores?: IProfessor[]
+  professores?: IProfessor[];
 
   @IsOptional()
   @ApiProperty({

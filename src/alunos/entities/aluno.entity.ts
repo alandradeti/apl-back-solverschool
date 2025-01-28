@@ -1,6 +1,13 @@
 import { Turma } from 'src/turmas/entities/turma.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { IAluno } from './interfaces/aluno.entity.interface';
 import { Prova } from 'src/provas/entities/prova.entity';
 
@@ -18,14 +25,14 @@ export class Aluno implements IAluno {
   })
   matricula: string;
 
-  @OneToOne(() => Usuario, (usuario) => usuario.aluno,{
-    nullable: false
+  @OneToOne(() => Usuario, (usuario) => usuario.aluno, {
+    nullable: false,
   })
   @JoinColumn()
   usuario: Usuario;
 
-  @ManyToMany(() => Turma, (turma) => turma.alunos,{
-    nullable: false
+  @ManyToMany(() => Turma, (turma) => turma.alunos, {
+    nullable: false,
   })
   turmas: Turma[];
 
