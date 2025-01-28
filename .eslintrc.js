@@ -19,24 +19,25 @@ module.exports = {
   rules: {
     //Configuração de regras para Prettier
     'prettier/prettier': [
-      'error', {
-        'endOfLine': 'auto',
-        'singleQuote': true,
-        'semi': true,
-        'trailingComma': 'all',
-      }
+      'error',
+      {
+        endOfLine: 'auto',
+        singleQuote: true,
+        semi: true,
+        trailingComma: 'all',
+      },
     ],
     //Configuração de regras para interfaces
-    "@typescript-eslint/naming-convention": [
-      "error",
+    '@typescript-eslint/naming-convention': [
+      'error',
       {
-        "selector": "interface",
-        "format": ["PascalCase"],
-        "custom": {
-          "regex": "^I[A-Z]",
-          "match": true
-        }
-      }
+        selector: 'interface',
+        format: ['PascalCase'],
+        custom: {
+          regex: '^I[A-Z]',
+          match: true,
+        },
+      },
     ],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
