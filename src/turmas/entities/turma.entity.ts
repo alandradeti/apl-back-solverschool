@@ -1,15 +1,15 @@
 import { Aluno } from 'src/alunos/entities/aluno.entity';
 import { Professor } from 'src/professores/entities/professor.entity';
 import {
-  Entity,
   PrimaryGeneratedColumn,
   Column,
   ManyToMany,
-  OneToMany,
   JoinTable,
+  Entity,
 } from 'typeorm';
 import { ITurma } from './interfaces/tuma.entity.interface';
 
+@Entity('turma')
 export class Turma implements ITurma {
   @PrimaryGeneratedColumn('uuid', {
     name: 'id',
@@ -29,8 +29,9 @@ export class Turma implements ITurma {
   @JoinTable()
   alunos: Aluno[];
 
-  @OneToMany(() => Professor, (professor) => professor.turmas, {
+  @ManyToMany(() => Professor, (professor) => professor.turmas, {
     nullable: false,
   })
+  @JoinTable()
   professores: Professor[];
 }
