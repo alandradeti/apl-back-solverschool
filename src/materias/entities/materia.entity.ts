@@ -1,6 +1,8 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IMateria } from './interfaces/materia.entity.interface';
 import { Pergunta } from 'src/perguntas/entities/pergunta.entity';
+import { Professor } from 'src/professores/entities/professor.entity';
+import { Prova } from 'src/provas/entities/prova.entity';
 
 @Entity({
   name: 'materia',
@@ -30,4 +32,12 @@ export class Materia implements IMateria {
     cascade: true,
   })
   perguntas?: Pergunta[];
+
+  @ManyToMany(() => Professor, (professor) => professor.materias, {
+    nullable: false,
+  })
+  professores: Professor[];
+
+  @OneToMany(() => Prova, (prova) => prova.materia)
+  provas?: Prova[];
 }
